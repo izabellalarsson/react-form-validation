@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { userSchema } from "./Validations/UserValidation";
+import "./App.css";
 
 function App() {
+  const [formData, setFormdata] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Formik and Yup</h1>
+      <Formik
+        initialValues={formData}
+        validationSchema={userSchema}
+        onSubmit={(values) => {
+          setFormdata(values);
+        }}
+      >
+        <Form>
+          <Field name="firstName" type="text" placeholder="first name" />
+          <ErrorMessage name="firstName" />
+          <Field name="lastName" type="text" placeholder="last name" />
+          <ErrorMessage name="lastName" />
+          <Field name="email" type="text" placeholder="email" />
+          <ErrorMessage name="email" />
+          <Field name="password" type="text" placeholder="password" />
+          <ErrorMessage name="password" />
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
     </div>
   );
 }
